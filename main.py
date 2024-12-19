@@ -9,7 +9,7 @@ def get_command():
     except ValueError:
         return "ValueError"
 
-def table_employees_scene(db:DataBase):
+def table_employees_scene(db:DataBase): #работа с таблицей Employees
     cmd = get_command()
     if cmd == 1:
         db.show_table("Employees")
@@ -50,7 +50,7 @@ def table_employees_scene(db:DataBase):
         print("Error--> Нет такой команды")
         return "table_employees"
 
-def table_departments_scene(db:DataBase):
+def table_departments_scene(db:DataBase): #работа с таблицей Departments
     cmd = get_command()
     if cmd == 1:
         db.show_table("Departments")
@@ -91,7 +91,7 @@ def table_departments_scene(db:DataBase):
         print("Error--> Нет такой команды")
         return "table_departments"
 
-def table_jobtitles_scene(db:DataBase):
+def table_jobtitles_scene(db:DataBase): #работа с таблицей JobTitles
     cmd = get_command()
     if cmd == 1:
         db.show_table("JobTitles")
@@ -132,7 +132,7 @@ def table_jobtitles_scene(db:DataBase):
         print("Error--> Нет такой команды")
         return "table_jobtitles"
 
-def table_vacatios_scene(db:DataBase):
+def table_vacations_scene(db:DataBase): #работа с таблицей Vacations
     cmd = get_command()
     if cmd == 1:
         db.show_table("Vacations")
@@ -173,7 +173,7 @@ def table_vacatios_scene(db:DataBase):
         print("Error--> Нет такой команды")
         return "table_vacations"
 
-def count_salary_for_person(db:DataBase):
+def count_salary_for_person(db:DataBase): #подсчет выплаченной зп за период времени
     print("""
                 Введите данные через пробел:
                 <Id сотрудника> <Дата начала отсчета> <Дата конца отсчета>
@@ -182,7 +182,7 @@ def count_salary_for_person(db:DataBase):
     db.count_salary_for_period(id, start, end)
     return "main"
 
-def personal_by_department(db:DataBase):
+def personal_by_department(db:DataBase): #подсчет численности отдела
     print("""
                 Введите Id отдела:
     """)
@@ -190,7 +190,7 @@ def personal_by_department(db:DataBase):
     db.count_department_employees(id)
     return "main"
 
-def scene_main():
+def scene_main(): #главная страница консольного интерфейса
     print("""
                 1. Табл. Employees
                 2. Табл. Departments
@@ -258,7 +258,7 @@ def main():
         elif current_scene == "table_vacations":
             print("         Текущая таблица: Vacations")
             print(table_scene_list)
-            current_scene = table_vacatios_scene(db)
+            current_scene = table_vacations_scene(db)
         elif current_scene == "count_salary":
             current_scene = count_salary_for_person(db)
         elif current_scene == "department_popularity":
