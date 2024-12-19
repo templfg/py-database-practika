@@ -6,14 +6,14 @@ class DataBase:
         self.con = sql.connect('manufacture.db')
         self.tables = ['Departments', 'JobTitles', 'Employees', 'Vacations']
     
-    def check_ready(self):
+    def check_ready(self): #проверка, создана ли база данных
         with self.con:
             data = []
             for row in self.con.execute("select tbl_name from sqlite_master where type = 'table'"):
                 data.append(row[0])
             return data == self.tables
 
-    def show_table(self, table):
+    def show_table(self, table): #вывод данных из таблицы
         if table in self.tables:
             with self.con:
                 data = self.con.execute('select * from ' + table)
@@ -22,7 +22,7 @@ class DataBase:
             return ""
         return "TableNotFound"
     
-    def count_salary_for_period(self, id, start, end):
+    def count_salary_for_period(self, id, start, end): #подсчет выплаченной зп за период времени
         with self.con:
             for row in self.con.execute(f"select DateHire, Salary, FullName from Employees where Id='{id}'"):
                 datehire = row[0]
@@ -33,12 +33,12 @@ class DataBase:
             daydiff = abs((s - e).days)
             print(f"За {daydiff} дней сотруднику {name} было выплачено {daydiff // 30 * salary} руб.\n")
     
-    def count_all_employees(self):
+    def count_all_employees(self): #подсчет численности предприятия
         with self.con:
             for row in self.con.execute("select count(*) from Employees"):
                 print(f"Общее количество сотрудников: {int(row[0])}")
     
-    def count_department_employees(self, department_code):
+    def count_department_employees(self, department_code): #подсчет численности отдела
         with self.con:
             for row in self.con.execute(f"select count(*) from Employees where Department={department_code}"):
                 value = int(row[0])
@@ -46,10 +46,14 @@ class DataBase:
                 department = row[0]
             print(f"В отеделе {department} числятся {value} сотрудников\n")
     
-    def add_row_in_table(self, table, row):
+    def add_row_in_table(self, table, row): #добавление записи в таблицу
         query = f"insert into {table} values {row}"
         with self.con:
             self.con.execute(query)
+    
+    def delete_row_from_table(self, table, column_name, value): #удаление записи из таблицы
+        with self.con:
+            self.con.execute(f"delete from {table} where {column_name} = {value}")
     
     def delete_row_from_table(self, table, column_name, value):
         with self.con:
