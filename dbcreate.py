@@ -1,6 +1,6 @@
 import sqlite3 as sql
 
-def dbcreate():
+def dbcreate(): #создание базы данных
     con = sql.connect('manufacture.db')
     with con:
         con.execute("""
@@ -41,7 +41,7 @@ def dbcreate():
             )
         """)
 
-def dbfill():
+def dbfill(): #заполнение базы данных тестовыми данными
     con = sql.connect('manufacture.db')
     department_fill = 'insert into Departments (Id, DepartmentName) values(?, ?)'
     department_data = [
